@@ -2,7 +2,7 @@
   "name": "Croatie 2026",
   "short_name": "Croatie",
   "description": "Notre voyage en Croatie — 1-8 juillet 2026",
-  "start_url": "/",
+  "start_url": "/aujourd-hui",
   "scope": "/",
   "display": "standalone",
   "background_color": "#0E4D7B",
