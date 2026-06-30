@@ -4,10 +4,10 @@ export const accommodations: Accommodation[] = [
   {
     id: "split-debut",
     name: "Split Summer Budget Rooms",
-    address: "Split, Croatie",
+    address: "Ulica Matice hrvatske 13, 21000 Split, Croatie",
     checkin: "2026-07-01",
     checkout: "2026-07-03",
-    mapsUrl: "https://maps.google.com/?q=Split+Summer+Budget+Rooms+Split",
+    mapsUrl: "https://maps.google.com/?q=Ulica+Matice+Hrvatske+13,+21000+Split,+Croatia",
     nights: 2,
   },
   {
@@ -31,10 +31,10 @@ export const accommodations: Accommodation[] = [
   {
     id: "split-fin",
     name: "Split Summer Budget Rooms",
-    address: "Split, Croatie",
+    address: "Ulica Matice hrvatske 13, 21000 Split, Croatie",
     checkin: "2026-07-07",
     checkout: "2026-07-08",
-    mapsUrl: "https://maps.google.com/?q=Split+Summer+Budget+Rooms+Split",
+    mapsUrl: "https://maps.google.com/?q=Ulica+Matice+Hrvatske+13,+21000+Split,+Croatia",
     nights: 1,
   },
 ];

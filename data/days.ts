@@ -60,7 +60,7 @@ export const days: Day[] = [
       from: "Aéroport de Split (Kaštela)",
       fromMapsUrl: "https://maps.google.com/?q=Split+Airport+Kaštela",
       to: "Split Summer Budget Rooms (centre)",
-      toMapsUrl: "https://maps.google.com/?q=Split+Summer+Budget+Rooms+Split",
+      toMapsUrl: "https://maps.google.com/?q=Ulica+Matice+Hrvatske+13,+21000+Split,+Croatia",
       mode: "Bus ligne 37 (direction centre)",
       recommendedTime: "Selon l'heure d'arrivée du vol",
       durationLabel: "~30 min",
