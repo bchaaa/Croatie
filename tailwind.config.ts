@@ -54,11 +54,32 @@ const config: Config = {
         "splash-out": {
           to: { opacity: "0", visibility: "hidden" },
         },
+        drift: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-120px)" },
+        },
+        "logo-in": {
+          from: { opacity: "0", transform: "scale(0.8)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
+        glow: {
+          "0%, 100%": { opacity: "0.5", transform: "scale(1)" },
+          "50%": { opacity: "0.9", transform: "scale(1.08)" },
+        },
+        progress: {
+          from: { width: "0%" },
+          to: { width: "100%" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.3s ease-out",
         wave: "wave 2s ease-in-out infinite",
         "rise-in": "rise-in 0.6s ease-out both",
+        drift: "drift 7s linear infinite",
+        "drift-slow": "drift 11s linear infinite reverse",
+        "logo-in": "logo-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both",
+        glow: "glow 2.4s ease-in-out infinite",
+        progress: "progress 2.2s linear forwards",
       },
     },
   },
