@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Thème sombre Adriatique — tokens de surface (triplets RGB). */
+  :root {
+    --night: 8 18 28; /* #08121c fond profond */
+    --card: 16 30 46; /* #101e2e cartes */
+    --elevated: 24 43 63; /* #182b3f chips / surfaces hautes */
+    --line: 38 58 80; /* #263a50 bordures */
+    --ink: 232 240 247; /* #e8f0f7 texte principal */
+    --muted: 148 168 186; /* #94a8ba texte secondaire */
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-night font-sans text-ink antialiased;
+    background-image: radial-gradient(
+        1200px 600px at 50% -10%,
+        rgba(45, 212, 212, 0.08),
+        transparent 70%
+      ),
+      radial-gradient(900px 500px at 90% 10%, rgba(27, 108, 168, 0.1), transparent 70%);
+    background-attachment: fixed;
+    /* Évite le rebond élastique disgracieux en PWA standalone iOS. */
+    overscroll-behavior-y: none;
+  }
+
+  /* Champs de formulaire lisibles en sombre. */
+  input,
+  select,
+  textarea {
+    color-scheme: dark;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-muted/60;
+  }
+}
+
+@layer utilities {
+  /* Conteneur d'app mobile-first centré. */
+  .app-shell {
+    @apply mx-auto w-full max-w-app;
+  }
+}
