@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import Splash from "@/components/Splash";
+import ConciergeChat from "@/components/ConciergeChat";
 
 // Exécuté avant l'hydratation React : si le splash a déjà été vu dans cette
 // session, on le masque immédiatement (CSS) pour éviter qu'il ne clignote
@@ -75,6 +76,7 @@ export default function RootLayout({
           <main className="px-4 pt-5">{children}</main>
         </div>
         <BottomNav />
+        <ConciergeChat />
       </body>
     </html>
   );
