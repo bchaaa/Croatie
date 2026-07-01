@@ -1,7 +1,8 @@
 import { UtensilsCrossed, Star, MapPin, BedDouble, Sparkles } from "lucide-react";
 import { restaurantsByBase, type Restaurant } from "@/data/restaurants";
-import { cityGradient } from "@/lib/cities";
+import { cityGradient, cityHex } from "@/lib/cities";
 import { MapsButton } from "@/components/ui";
+import CityMap from "@/components/CityMap";
 
 export const metadata = {
   title: "Restaurants — Croatie 2026",
@@ -49,6 +50,11 @@ export default function RestaurantsPage() {
               <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
               <span>{base.specialty}</span>
             </p>
+          </div>
+
+          {/* Carte cliquable : un marqueur par resto, infos au clic */}
+          <div className="relative z-0 mb-2.5 h-56 overflow-hidden rounded-2xl border border-line shadow-soft">
+            <CityMap restaurants={base.restaurants} color={cityHex(base.city)} />
           </div>
 
           <ul className="space-y-2.5">

@@ -10,3 +10,11 @@ export function cityGradient(city: string): string {
   if (c.includes("dubrovnik")) return "from-coral to-sand";
   return "from-sea to-turquoise"; // Split & défaut
 }
+
+/** Couleur d'accent (hex) par ville, pour les marqueurs de carte. */
+export function cityHex(city: string): string {
+  const c = city.toLowerCase();
+  if (c.includes("makarska")) return "#14b8a6"; // teal
+  if (c.includes("dubrovnik")) return "#FF6B52"; // corail
+  return "#2DD4D4"; // turquoise (Split & défaut)
+}

@@ -20,6 +20,8 @@ export interface Restaurant {
   area: string;
   address: string;
   mapsUrl: string;
+  /** Position [latitude, longitude] pour le marqueur de la carte (indicative). */
+  coords: [number, number];
   description: string;
 }
 
@@ -49,6 +51,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "1 rue derrière le Palais",
         address: "Senjska ul. 1, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Konoba+Marjan+Split",
+        coords: [43.5090, 16.4370],
         description:
           "Konoba sans chichis pour un dîner dalmate sans se ruiner, à l'écart des pièges à touristes du Palais.",
       },
@@ -63,6 +66,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Vieille ville",
         address: "Ul. Petra Kružića 3, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Villa+Spiza+Split",
+        coords: [43.5089, 16.4405],
         description:
           "Minuscule comptoir, plats du jour écrits au tableau selon le marché. Très prisé, ça tourne vite — un peu de patience à l'entrée.",
       },
@@ -77,6 +81,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Port de Matejuška",
         address: "Tomića Stine 3, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Konoba+Fetivi+Split",
+        coords: [43.5083, 16.4370],
         description:
           "Konoba familiale, poisson frais généreux. Cité au guide Michelin mais reste abordable — réserver le soir.",
       },
@@ -91,6 +96,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Quartier Varoš",
         address: "Matošića ul. 1, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Kantun+Paulina+Split",
+        coords: [43.5096, 16.4378],
         description:
           "Les meilleurs ćevapi de Split depuis 35+ ans, à emporter. File d'attente = bon signe. Espèces uniquement.",
       },
@@ -104,6 +110,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Bord de mer (Trumbićeva obala)",
         address: "Trumbićeva obala 16, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Bokamorra+Split",
+        coords: [43.5069, 16.4381],
         description:
           "Réputée pour la meilleure pizza (pâte napolitaine) de la ville, ambiance décontractée face à la mer.",
       },
@@ -117,6 +124,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Matejuška",
         address: "Trumbićeva obala 11, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Konoba+Fife+Split",
+        coords: [43.5071, 16.4386],
         description:
           "Institution populaire au bord de l'eau, poisson frais et plats copieux à prix doux. Cadre simple, portions généreuses.",
       },
@@ -139,6 +147,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Vieille ville",
         address: "Kalalarga 40, 21300 Makarska",
         mapsUrl: "https://maps.google.com/?q=Konoba+Kalalarga+Makarska",
+        coords: [43.2963, 17.0182],
         description:
           "Sans carte : poisson pêché du jour et vin maison à petit prix. Petite salle, réserver par téléphone en été.",
       },
@@ -153,6 +162,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "En retrait de la promenade",
         address: "Kačićev trg 8, 21300 Makarska",
         mapsUrl: "https://maps.google.com/?q=Restoran+Susvid+Makarska",
+        coords: [43.2958, 17.0189],
         description:
           "Cuisine croate soignée, poisson frais et spécialités locales. Un cran au-dessus, très apprécié des locaux.",
       },
@@ -166,6 +176,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Centre / front de mer",
         address: "Centre de Makarska (terrasse bord de mer)",
         mapsUrl: "https://maps.google.com/?q=Tempera+Streetfood+Makarska",
+        coords: [43.2966, 17.0168],
         description:
           "Street food moderne et décontractée, grande terrasse côté mer. Idéal pour un repas rapide et pas cher.",
       },
@@ -188,6 +199,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Lapad · proche du logement",
         address: "Ul. kralja Tomislava 1, 20000 Dubrovnik (Lapad)",
         mapsUrl: "https://maps.google.com/?q=Pantarul+Dubrovnik",
+        coords: [42.6549, 18.0806],
         description:
           "Cuisine créative croate/méditerranéenne, produits locaux, belles options végé. Le meilleur choix à deux pas du logement.",
       },
@@ -201,6 +213,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Colline de Srđ (au-dessus de la ville)",
         address: "Bosanka, Srđ, 20000 Dubrovnik",
         mapsUrl: "https://maps.google.com/?q=Konoba+Dubrava+Dubrovnik",
+        coords: [42.6486, 18.1246],
         description:
           "Konoba rustique loin de la foule, spécialités sous la cloche (peka), grillades et vue imprenable. Prévoir un taxi/voiture.",
       },
@@ -215,6 +228,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Vieille ville",
         address: "Boškovićeva ul. 5, 20000 Dubrovnik",
         mapsUrl: "https://maps.google.com/?q=Barba+Dubrovnik",
+        coords: [42.6413, 18.1093],
         description:
           "Street food de la mer (burger de poulpe, sandwich au thon) : la qualité d'un resto de poisson à une fraction du prix.",
       },
@@ -229,6 +243,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Vieille ville",
         address: "Ul. Nikole Gučetića 2, 20000 Dubrovnik",
         mapsUrl: "https://maps.google.com/?q=Taj+Mahal+Dubrovnik+Old+Town",
+        coords: [42.6404, 18.1082],
         description:
           "Malgré le nom, cuisine bosniaque : les meilleurs ćevapi de Dubrovnik, burek et plats copieux. Réserver, c'est petit.",
       },
@@ -243,6 +258,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Vieille ville (rue Prijeko)",
         address: "Prijeko ul., 20000 Dubrovnik",
         mapsUrl: "https://maps.google.com/?q=Nishta+Dubrovnik",
+        coords: [42.6416, 18.1086],
         description:
           "Cuisine végé/vegan fusion (falafel, curry, soupes). Petite terrasse, réserver de juin à septembre.",
       },
@@ -257,6 +273,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Près de la Porte Ploče",
         address: "Hvarska ul. 48A, 20000 Dubrovnik",
         mapsUrl: "https://maps.google.com/?q=Pizzeria+Tabasco+Dubrovnik",
+        coords: [42.6423, 18.1126],
         description:
           "La pizzeria préférée des locaux depuis des années, bien moins chère que dans les murs de la vieille ville.",
       },
