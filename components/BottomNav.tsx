@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Map, Luggage, Info } from "lucide-react";
+import { CalendarDays, Map, UtensilsCrossed, Luggage, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { href: "/aujourd-hui", label: "Aujourd'hui", Icon: CalendarDays },
   { href: "/programme", label: "Programme", Icon: Map },
+  { href: "/restaurants", label: "Restos", Icon: UtensilsCrossed },
   { href: "/prepa", label: "Prépa", Icon: Luggage },
   { href: "/infos", label: "Infos", Icon: Info },
 ] as const;
@@ -21,7 +22,7 @@ export default function BottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       aria-label="Navigation principale"
     >
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-5">
         {items.map(({ href, label, Icon }) => {
           const active =
             pathname === href ||
