@@ -61,10 +61,10 @@ export default function ConciergeChat() {
         }),
       });
       const data = await r.json();
-      setMessages((m) => [
-        ...m,
-        { role: "assistant", content: data.reply || "…" },
-      ]);
+      const content =
+        (data.reply || "…") +
+        (data.detail ? `\n\n(détail technique : ${data.detail})` : "");
+      setMessages((m) => [...m, { role: "assistant", content }]);
     } catch {
       setMessages((m) => [
         ...m,
