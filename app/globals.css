@@ -40,6 +40,20 @@
   textarea::placeholder {
     @apply text-muted/60;
   }
+
+  /* Anneau de focus visible au clavier — invisible à la souris/tactile.
+     Accessibilité : navigation clavier & lecteurs d'écran (priorité du
+     référentiel de design). */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid theme("colors.turquoise");
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
 }
 
 @layer utilities {

@@ -53,8 +53,7 @@ export const viewport: Viewport = {
   themeColor: "#08121c",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Zoom laissé actif : le bloquer nuit à l'accessibilité (lecture).
   viewportFit: "cover",
 };
 
