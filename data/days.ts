@@ -58,7 +58,7 @@ export const days: Day[] = [
     ],
     transport: {
       from: "Aéroport de Split (Kaštela)",
-      fromMapsUrl: "https://maps.google.com/?q=Cesta+dr.+Franje+Tuđmana+1270,+21217+Kaštel+Štafilić,+Croatia",
+      fromMapsUrl: "https://maps.google.com/?q=43.5389,16.2980",
       to: "Split Summer Budget Rooms (centre)",
       toMapsUrl: "https://maps.google.com/?q=Ulica+Matice+Hrvatske+13,+21000+Split,+Croatia",
       mode: "Bus ligne 37 (direction centre)",
@@ -1048,7 +1048,7 @@ export const days: Day[] = [
       from: "Split centre — arrêt Obala Lazareta",
       fromMapsUrl: "https://maps.google.com/?q=Obala+Lazareta+Split",
       to: "Aéroport de Split (Kaštela)",
-      toMapsUrl: "https://maps.google.com/?q=Cesta+dr.+Franje+Tuđmana+1270,+21217+Kaštel+Štafilić,+Croatia",
+      toMapsUrl: "https://maps.google.com/?q=43.5389,16.2980",
       mode: "Bus ligne 37",
       recommendedTime: "Partir 2h30 avant le vol minimum (files en juillet)",
       durationLabel: "~30 min",
