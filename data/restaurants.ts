@@ -110,7 +110,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Bord de mer (Trumbićeva obala)",
         address: "Trumbićeva obala 16, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Bokamorra+Split",
-        coords: [43.5069, 16.4381],
+        coords: [43.5076, 16.4380],
         description:
           "Réputée pour la meilleure pizza (pâte napolitaine) de la ville, ambiance décontractée face à la mer.",
       },
@@ -124,7 +124,7 @@ export const restaurantsByBase: RestaurantBase[] = [
         area: "Matejuška",
         address: "Trumbićeva obala 11, 21000 Split",
         mapsUrl: "https://maps.google.com/?q=Konoba+Fife+Split",
-        coords: [43.5071, 16.4386],
+        coords: [43.5075, 16.4384],
         description:
           "Institution populaire au bord de l'eau, poisson frais et plats copieux à prix doux. Cadre simple, portions généreuses.",
       },

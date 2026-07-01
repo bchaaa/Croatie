@@ -47,6 +47,15 @@ export default function RestaurantsMapInner({
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
     map.addControl(new maplibregl.FullscreenControl(), "top-right");
+    // « Vous êtes ici » : position GPS de l'appareil, en direct.
+    map.addControl(
+      new maplibregl.GeolocateControl({
+        positionOptions: { enableHighAccuracy: true },
+        trackUserLocation: true,
+        showUserLocation: true,
+      }),
+      "top-right"
+    );
     map.addControl(
       new maplibregl.AttributionControl({ compact: true }),
       "bottom-right"
