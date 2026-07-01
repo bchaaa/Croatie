@@ -146,7 +146,7 @@ export default function Checklist({
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           placeholder="Ajouter un élément…"
-          className="flex-1 rounded-xl border border-line bg-elevated/50 px-3 py-2 text-sm text-ink outline-none focus:border-turquoise"
+          className="flex-1 rounded-xl border border-line bg-elevated/50 px-3 py-2 text-base text-ink outline-none focus:border-turquoise"
         />
         <button
           type="submit"

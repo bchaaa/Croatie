@@ -25,6 +25,8 @@ export default function ConciergeChat() {
   const [messages, setMessages] = useState<Msg[]>([GREETING]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  // Hauteur réelle visible (suit le clavier via l'API VisualViewport).
+  const [panelH, setPanelH] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -38,9 +40,20 @@ export default function ConciergeChat() {
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
+
+    // Le clavier mobile réduit le viewport visible : on recale la hauteur du
+    // panneau dessus pour que la saisie reste au-dessus du clavier, sans décalage.
+    const vv = window.visualViewport;
+    const syncHeight = () => setPanelH(vv ? vv.height : window.innerHeight);
+    syncHeight();
+    vv?.addEventListener("resize", syncHeight);
+    vv?.addEventListener("scroll", syncHeight);
+
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
+      vv?.removeEventListener("resize", syncHeight);
+      vv?.removeEventListener("scroll", syncHeight);
     };
   }, [open]);
 
@@ -95,10 +108,13 @@ export default function ConciergeChat() {
 
       {/* Panneau de conversation */}
       {open && (
-        <div className="fixed inset-0 z-[70] flex justify-center bg-night/70 backdrop-blur-sm">
+        <div
+          className="fixed inset-x-0 top-0 z-[70] flex justify-center overflow-hidden bg-night/70 backdrop-blur-sm"
+          style={{ height: panelH ? `${panelH}px` : "100dvh" }}
+        >
           <div className="flex h-full w-full max-w-app flex-col bg-night">
             {/* En-tête */}
-            <header className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+            <header className="flex shrink-0 items-center justify-between gap-3 border-b border-line px-4 py-3">
               <div className="flex items-center gap-2">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-sea to-turquoise text-white">
                   <Sparkles className="h-5 w-5" aria-hidden />
@@ -121,7 +137,10 @@ export default function ConciergeChat() {
             </header>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            <div
+              ref={scrollRef}
+              className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4"
+            >
               {messages.map((m, i) => (
                 <div
                   key={i}
@@ -171,7 +190,7 @@ export default function ConciergeChat() {
                 e.preventDefault();
                 send(input);
               }}
-              className="flex items-center gap-2 border-t border-line px-3 py-3"
+              className="flex shrink-0 items-center gap-2 border-t border-line px-3 py-3"
               style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
             >
               <input
@@ -180,7 +199,9 @@ export default function ConciergeChat() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Écrire au concierge…"
-                className="flex-1 rounded-full border border-line bg-elevated/50 px-4 py-2.5 text-sm text-ink outline-none focus:border-turquoise"
+                enterKeyHint="send"
+                /* text-base (16px) : évite le zoom auto d'iOS au focus. */
+                className="flex-1 rounded-full border border-line bg-elevated/50 px-4 py-2.5 text-base text-ink outline-none focus:border-turquoise"
               />
               <button
                 type="submit"
