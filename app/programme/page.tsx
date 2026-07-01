@@ -4,6 +4,7 @@ import { days } from "@/data/days";
 import { estimatedDayTotalForTwo } from "@/lib/budget";
 import { formatShortDate } from "@/lib/date";
 import { formatEUR } from "@/lib/utils";
+import { cityGradient } from "@/lib/cities";
 
 export const metadata = {
   title: "Programme — Croatie 2026",
@@ -25,7 +26,11 @@ export default function ProgrammePage() {
               className="block rounded-2xl border border-line bg-card p-4 shadow-soft transition-all hover:border-turquoise/40 hover:shadow-card active:scale-[0.99]"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-sea to-turquoise text-xl text-white">
+                <span
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${cityGradient(
+                    d.city
+                  )} text-xl text-white shadow-soft`}
+                >
                   {d.emoji}
                 </span>
                 <div className="min-w-0 flex-1">

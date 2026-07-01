@@ -3,10 +3,12 @@ import type { Day } from "@/data/types";
 import { getAccommodation } from "@/data/accommodations";
 import { estimatedDayTotalForTwo } from "@/lib/budget";
 import { formatLongDate } from "@/lib/date";
+import { days } from "@/data/days";
 import ActivityCard from "./ActivityCard";
 import TransportCard from "./TransportCard";
 import AccommodationCard from "./AccommodationCard";
 import BudgetBadge from "./BudgetBadge";
+import HeroWave from "./HeroWave";
 
 /**
  * Affiche le contenu complet d'un jour : en-tête, transport, hébergement,
@@ -19,16 +21,43 @@ export default function DayTimeline({ day }: { day: Day }) {
   return (
     <div className="space-y-4">
       {/* En-tête du jour */}
-      <header className="rounded-2xl bg-gradient-to-br from-sea to-turquoise p-5 text-white shadow-card">
-        <p className="text-sm font-medium uppercase tracking-wide text-white/80">
-          Jour {day.dayNumber} / 8 — {day.city}
-        </p>
-        <h1 className="mt-1 font-display text-2xl font-bold leading-tight">
-          {day.emoji} {day.title}
-        </h1>
-        <p className="mt-1 text-sm text-white/80 first-letter:uppercase">
-          {formatLongDate(day.date)}
-        </p>
+      <header className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sea via-sea to-turquoise p-5 text-white shadow-card">
+        <HeroWave />
+        <div className="relative">
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-2xl ring-1 ring-inset ring-white/25 backdrop-blur-sm">
+              {day.emoji}
+            </span>
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/85">
+                Jour {day.dayNumber} · {day.city}
+              </p>
+              <p className="text-[11px] text-white/70 first-letter:uppercase">
+                {formatLongDate(day.date)}
+              </p>
+            </div>
+          </div>
+
+          <h1 className="mt-3 font-display text-[26px] font-bold leading-tight">
+            {day.title}
+          </h1>
+
+          {/* Progression du voyage : un point par jour */}
+          <div className="mt-4 flex items-center gap-1.5" aria-hidden>
+            {days.map((d) => (
+              <span
+                key={d.id}
+                className={
+                  d.dayNumber === day.dayNumber
+                    ? "h-1.5 w-5 rounded-full bg-white"
+                    : d.dayNumber < day.dayNumber
+                    ? "h-1.5 w-1.5 rounded-full bg-white/80"
+                    : "h-1.5 w-1.5 rounded-full bg-white/30"
+                }
+              />
+            ))}
+          </div>
+        </div>
       </header>
 
       <BudgetBadge estimatedForTwo={estimated} className="w-full justify-start" />
