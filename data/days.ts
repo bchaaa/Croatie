@@ -64,10 +64,10 @@ export const days: Day[] = [
       mode: "Bus ligne 37 (direction centre)",
       recommendedTime: "Selon l'heure d'arrivée du vol",
       durationLabel: "~30 min",
-      pricePerPerson: 2,
-      priceNote: "Arrêt : Obala Lazareta, proche du Palais de Dioclétien",
+      pricePerPerson: 3,
+      priceNote: "3 €/pers à bord · 1,50 €/pers via l'appli Promet Split",
       bookingUrl: null,
-      notes: "Acheter le billet à bord ou au kiosque. Bus toutes les ~20 min.",
+      notes: "Arrêt d'arrivée : Obala Lazareta, près du Palais de Dioclétien. Billet à bord (3 €) ou moins cher sur l'appli Promet Split (1,50 €) — à valider en montant. Bus toutes les ~10-20 min.",
     },
     activities: [
       {
@@ -358,7 +358,7 @@ export const days: Day[] = [
       durationLabel: "~1h15",
       pricePerPerson: 9,
       priceNote: "~7-10 €/pers",
-      bookingUrl: "https://www.flixbus.com/bus-routes/bus-split-makarska",
+      bookingUrl: "https://www.arriva.com.hr/en-us/bus-split-makarska",
       notes: "Arrivée à 5 min à pied de Vukovarska ulica 26. Billet FlixBus en ligne, ou au guichet (Promet/Arriva).",
     },
     activities: [
@@ -637,7 +637,7 @@ export const days: Day[] = [
       durationLabel: "~2h30-3h",
       pricePerPerson: 18,
       priceNote: "~15-20 €/pers",
-      bookingUrl: "https://www.flixbus.com/bus-routes/bus-makarska-dubrovnik",
+      bookingUrl: "https://www.arriva.com.hr/en-us/bus-makarska-dubrovnik",
       notes:
         "Puis bus local 7 ou 8 (gare → Lapad), ~15 min, ~2 €/pers, pour rejoindre Villa Franovic.",
     },
@@ -926,9 +926,9 @@ export const days: Day[] = [
       mode: "Bus direct",
       recommendedTime: "Départ 7h00-8h00 (arrivée Split ~11h-12h)",
       durationLabel: "~4h",
-      pricePerPerson: 22,
-      priceNote: "~20-25 €/pers",
-      bookingUrl: "https://www.flixbus.com/bus-routes/bus-dubrovnik-split",
+      pricePerPerson: 15,
+      priceNote: "~10-20 €/pers selon l'opérateur et l'anticipation",
+      bookingUrl: "https://www.arriva.com.hr/en-us/bus-dubrovnik-split",
       notes:
         "Grosse journée : enchaîner sur Krka puis Trogir avant de dormir à Split (même logement que J1).",
     },
@@ -1052,9 +1052,10 @@ export const days: Day[] = [
       mode: "Bus ligne 37",
       recommendedTime: "Partir 2h30 avant le vol minimum (files en juillet)",
       durationLabel: "~30 min",
-      pricePerPerson: 2,
+      pricePerPerson: 3,
+      priceNote: "3 €/pers à bord · 1,50 €/pers via l'appli Promet Split",
       bookingUrl: null,
-      notes: "Acheter le billet à bord. Prévoir large pour les contrôles d'été.",
+      notes: "Billet à bord (3 €) ou sur l'appli Promet Split (1,50 €), à valider en montant. Prévoir large pour les contrôles d'été.",
     },
     activities: [
       {
