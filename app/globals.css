@@ -48,3 +48,10 @@
     @apply mx-auto w-full max-w-app;
   }
 }
+
+/* Masque le splash avant même l'hydratation React si déjà vu dans la
+   session (posé par le script inline dans <head>, cf. layout.tsx).
+   Évite un flash du splash sur les rechargements successifs. */
+html.splash-skip #app-splash {
+  display: none;
+}

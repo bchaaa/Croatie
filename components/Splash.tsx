@@ -10,22 +10,31 @@ const HIDE_FALLBACK_MS = 3200;
  * Écran d'accueil animé « Salut Bâton & Jean » affiché une fois par ouverture
  * de l'app (par session). Disparaît tout seul après ~2,7 s.
  *
+ * Affiché par défaut (y compris côté serveur) pour éviter tout flash du
+ * contenu de la page en dessous avant que React n'ait hydraté le composant.
+ * Sur un rechargement dans la même session, le script inline de layout.tsx
+ * (exécuté avant l'hydratation) masque déjà le splash via la classe CSS
+ * `splash-skip` ; l'effet ci-dessous ne fait alors qu'aligner l'état React.
+ *
  * Le garde `startedRef` (+ absence de cleanup qui annule les minuteurs) rend le
  * comportement stable malgré le double-rendu des effets en mode dev (Strict Mode).
  * Le passage « leaving » → « hidden » se fait à la fin de la transition CSS, avec
  * un minuteur de secours si la transition est désactivée.
  */
 export default function Splash() {
-  const [phase, setPhase] = useState<"hidden" | "shown" | "leaving">("hidden");
+  const [phase, setPhase] = useState<"hidden" | "shown" | "leaving">("shown");
   const startedRef = useRef(false);
 
   useEffect(() => {
     if (startedRef.current) return;
-    // Une seule fois par session (≈ par lancement de la PWA).
-    if (sessionStorage.getItem(SESSION_KEY)) return;
     startedRef.current = true;
+
+    // Déjà vu dans cette session : ne pas rejouer l'animation.
+    if (sessionStorage.getItem(SESSION_KEY)) {
+      setPhase("hidden");
+      return;
+    }
     sessionStorage.setItem(SESSION_KEY, "1");
-    setPhase("shown");
 
     setTimeout(() => setPhase("leaving"), SHOW_MS);
     // Secours : si la transition CSS ne se déclenche pas (reduced motion…).
@@ -36,6 +45,7 @@ export default function Splash() {
 
   return (
     <div
+      id="app-splash"
       onTransitionEnd={() => {
         if (phase === "leaving") setPhase("hidden");
       }}
@@ -73,15 +83,20 @@ export default function Splash() {
       </div>
 
       <div className="relative flex flex-col items-center text-center">
-        <div className="relative flex h-20 w-20 items-center justify-center">
+        <div className="relative flex h-24 w-24 items-center justify-center">
           <span className="absolute h-full w-full rounded-full bg-turquoise/40 blur-xl motion-safe:animate-glow" />
+          {/* Anneau de chargement circulaire. */}
+          <span
+            className="absolute h-full w-full rounded-full border-2 border-turquoise/20 border-t-turquoise motion-safe:animate-spin"
+            style={{ animationDuration: "1.4s" }}
+          />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icon.svg"
             alt=""
             width={64}
             height={64}
-            className="relative h-16 w-16 rounded-2xl shadow-card motion-safe:animate-logo-in"
+            className="relative h-16 w-16 rounded-full shadow-card motion-safe:animate-logo-in"
           />
           <span
             className="absolute -bottom-1 -right-1 text-2xl motion-safe:animate-wave"
@@ -108,13 +123,6 @@ export default function Splash() {
         >
           Direction la Croatie — 1 au 8 juillet 2026
         </p>
-      </div>
-
-      {/* Barre de progression, repère visuel de l'attente. */}
-      <div className="absolute inset-x-0 bottom-10 flex justify-center px-12">
-        <div className="h-1 w-full max-w-[180px] overflow-hidden rounded-full bg-elevated">
-          <div className="h-full rounded-full bg-gradient-to-r from-turquoise to-sand motion-safe:animate-progress motion-reduce:w-full" />
-        </div>
       </div>
     </div>
   );

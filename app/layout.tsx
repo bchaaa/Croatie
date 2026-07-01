@@ -1,8 +1,20 @@
 import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import BottomNav from "@/components/BottomNav";
 import Splash from "@/components/Splash";
+
+// Exécuté avant l'hydratation React : si le splash a déjà été vu dans cette
+// session, on le masque immédiatement (CSS) pour éviter qu'il ne clignote
+// à l'écran lors d'un rechargement.
+const SKIP_SPLASH_SCRIPT = `
+try {
+  if (sessionStorage.getItem("croatie-2026-splash-seen")) {
+    document.documentElement.classList.add("splash-skip");
+  }
+} catch (e) {}
+`;
 
 const display = Playfair_Display({
   subsets: ["latin"],
@@ -53,6 +65,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${display.variable} ${sans.variable}`}>
+      <head>
+        <Script id="skip-splash" strategy="beforeInteractive">
+          {SKIP_SPLASH_SCRIPT}
+        </Script>
+      </head>
       <body>
         <Splash />
         <div className="app-shell min-h-dvh pb-24">
