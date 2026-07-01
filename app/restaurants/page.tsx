@@ -1,8 +1,9 @@
 import { UtensilsCrossed, Star, MapPin, BedDouble, Sparkles } from "lucide-react";
 import { restaurantsByBase, type Restaurant } from "@/data/restaurants";
 import { cityGradient, cityHex } from "@/lib/cities";
-import { MapsButton } from "@/components/ui";
+import { toMapsAppUrl, toMapsEmbedUrl } from "@/lib/maps";
 import CityMap from "@/components/CityMap";
+import RestaurantMapButton from "@/components/RestaurantMapButton";
 
 export const metadata = {
   title: "Restaurants — Croatie 2026",
@@ -121,7 +122,11 @@ function RestaurantCard({ r }: { r: Restaurant }) {
 
       <div className="mt-3 flex items-center justify-between gap-2">
         <span className="text-xs font-medium text-muted">{r.priceNote}</span>
-        <MapsButton url={r.mapsUrl} />
+        <RestaurantMapButton
+          name={r.name}
+          embedUrl={toMapsEmbedUrl(r.mapsUrl)}
+          directUrl={toMapsAppUrl(r.mapsUrl)}
+        />
       </div>
     </article>
   );

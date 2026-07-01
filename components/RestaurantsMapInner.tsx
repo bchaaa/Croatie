@@ -1,24 +1,21 @@
 "use client";
 
-import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import { useEffect, useRef } from "react";
+import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 import type { Restaurant } from "@/data/restaurants";
 import { toMapsAppUrl } from "@/lib/maps";
 
-/** Marqueur en goutte, coloré selon la ville (aucune image externe requise). */
-function pinIcon(color: string) {
-  return L.divIcon({
-    className: "resto-pin",
-    html: `<svg width="26" height="34" viewBox="0 0 26 34" xmlns="http://www.w3.org/2000/svg">
-      <path d="M13 0C6 0 0 5.6 0 12.5 0 21 13 34 13 34s13-13 13-21.5C26 5.6 20 0 13 0z"
-        fill="${color}" stroke="#0b1622" stroke-width="1.5"/>
-      <circle cx="13" cy="12.5" r="4.5" fill="#0b1622"/>
-    </svg>`,
-    iconSize: [26, 34],
-    iconAnchor: [13, 34],
-    popupAnchor: [0, -32],
-  });
+/** Élément DOM d'un marqueur en goutte coloré. */
+function pinElement(color: string): HTMLElement {
+  const el = document.createElement("div");
+  el.style.cursor = "pointer";
+  el.innerHTML = `<svg width="28" height="38" viewBox="0 0 26 34" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13 0C6 0 0 5.6 0 12.5 0 21 13 34 13 34s13-13 13-21.5C26 5.6 20 0 13 0z"
+      fill="${color}" stroke="#ffffff" stroke-width="1.5"/>
+    <circle cx="13" cy="12.5" r="4.5" fill="#ffffff"/>
+  </svg>`;
+  return el;
 }
 
 export default function RestaurantsMapInner({
@@ -28,47 +25,62 @@ export default function RestaurantsMapInner({
   restaurants: Restaurant[];
   color: string;
 }) {
-  const bounds = L.latLngBounds(restaurants.map((r) => r.coords));
-  const icon = pinIcon(color);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
 
-  return (
-    <MapContainer
-      bounds={bounds}
-      boundsOptions={{ padding: [28, 28] }}
-      scrollWheelZoom={false}
-      style={{ height: "100%", width: "100%" }}
-    >
-      {/* Tuiles sombres (CARTO) pour coller au thème de l'app. */}
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; OpenStreetMap &copy; CARTO'
-      />
-      {restaurants.map((r) => (
-        <Marker key={r.id} position={r.coords} icon={icon}>
-          <Popup>
-            <span style={{ fontWeight: 700, fontSize: "14px" }}>
-              {r.emoji} {r.name}
-            </span>
-            <br />
-            <span style={{ color: "#1b6ca8" }}>{r.category}</span> ·{" "}
-            {"€".repeat(r.price)}
-            <br />
-            {r.priceNote}
-            {r.rating ? ` · ${r.rating.toFixed(1)}★` : ""}
-            <br />
-            <span style={{ color: "#555" }}>{r.address}</span>
-            <br />
-            <a
-              href={toMapsAppUrl(r.mapsUrl)}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontWeight: 700, color: "#1b6ca8" }}
-            >
-              Ouvrir dans Maps →
-            </a>
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
-  );
+  useEffect(() => {
+    if (!containerRef.current || mapRef.current) return;
+
+    // Emprise couvrant tous les restos de la ville.
+    const bounds = new maplibregl.LngLatBounds();
+    restaurants.forEach((r) => bounds.extend([r.coords[1], r.coords[0]]));
+
+    const map = new maplibregl.Map({
+      container: containerRef.current,
+      // Style vectoriel moderne et clair (gratuit, sans clé API).
+      style: "https://tiles.openfreemap.org/styles/liberty",
+      bounds,
+      fitBoundsOptions: { padding: 44, maxZoom: 15 },
+      attributionControl: false,
+    });
+    mapRef.current = map;
+
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+    map.addControl(new maplibregl.FullscreenControl(), "top-right");
+    map.addControl(
+      new maplibregl.AttributionControl({ compact: true }),
+      "bottom-right"
+    );
+
+    restaurants.forEach((r) => {
+      const popup = new maplibregl.Popup({
+        offset: 30,
+        closeButton: true,
+        maxWidth: "240px",
+      }).setHTML(
+        `<div style="font-family:system-ui,sans-serif;line-height:1.35">
+          <div style="font-weight:700;font-size:14px">${r.emoji} ${r.name}</div>
+          <div style="color:#1b6ca8;font-size:12px">${r.category} · ${"€".repeat(
+          r.price
+        )}${r.rating ? ` · ${r.rating.toFixed(1)}★` : ""}</div>
+          <div style="font-size:12px;color:#555;margin:2px 0 4px">${r.address}</div>
+          <a href="${toMapsAppUrl(
+            r.mapsUrl
+          )}" target="_blank" rel="noopener noreferrer" style="font-weight:700;color:#1b6ca8;font-size:12px;text-decoration:none">Ouvrir dans Maps →</a>
+        </div>`
+      );
+
+      new maplibregl.Marker({ element: pinElement(color), anchor: "bottom" })
+        .setLngLat([r.coords[1], r.coords[0]])
+        .setPopup(popup)
+        .addTo(map);
+    });
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, [restaurants, color]);
+
+  return <div ref={containerRef} className="h-full w-full" />;
 }

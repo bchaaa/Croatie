@@ -18,3 +18,17 @@ export function toMapsAppUrl(url: string): string {
     return url;
   }
 }
+
+/**
+ * Lien d'intégration Google Maps (iframe) pour un lien `?q=…`. Google géocode
+ * la requête → position exacte, sans clé API. Utilisé pour la carte plein écran.
+ */
+export function toMapsEmbedUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    const q = u.searchParams.get("q") ?? "";
+    return `https://www.google.com/maps?q=${encodeURIComponent(q)}&z=16&output=embed`;
+  } catch {
+    return url;
+  }
+}
